@@ -1,3 +1,5 @@
+import 'package:book_library/application/boundaries/addbook/add_book_input.dart';
+import 'package:book_library/application/usecases/add_book_use_case.dart';
 import 'package:book_library/domain/factories/entity_factory.dart';
 import 'package:book_library/domain/repositories/book_repository.dart';
 import 'package:book_library/domain/repositories/book_shelf_repository.dart';
@@ -17,8 +19,8 @@ class MockBookRepository extends Mock implements BookRepository {}
 class MockEntityFactory extends Mock implements EntityFactory {}
 
 void main() {
-  AddBookUseCase sut;
-  MockShelfRepository mockShelfRepository;
+  AddBookUseCase? sut;
+  late MockShelfRepository mockShelfRepository;
   MockBookRepository mockBookRepository;
   MockEntityFactory mockEntityFactory;
 
@@ -28,9 +30,10 @@ void main() {
     mockEntityFactory = MockEntityFactory();
 
     sut = AddBookUseCase(
-        shelfRepository: mockShelfRepository,
-        bookRepository: mockBookRepository,
-        entityFactory: mockEntityFactory);
+      bookShelfRepository: mockShelfRepository,
+      bookRepository: mockBookRepository,
+      entityFactory: mockEntityFactory,
+    );
   });
 
   group('add book use case', () {
@@ -50,14 +53,14 @@ void main() {
         isbn: isbn,
         publishDate: publishDate);
     test("should return a failure when adding book to a non existing bookshelf",
-        () {
+        () async {
       //arrange
       when(mockShelfRepository.find(input.shelfId))
           .thenAnswer((realInvocation) => null);
 
-    var result =  await sut.execute(input);
+      var result = await sut!.execute(input);
 
-    expect(result, matcher);
+      expect(result.isLeft(), true);
     });
   });
 }

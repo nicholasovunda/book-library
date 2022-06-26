@@ -1,0 +1,6 @@
+{
+    "cSpell.words": [
+        "addbook"
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}/linux/flutter"
+}
