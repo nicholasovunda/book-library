@@ -1,22 +1,25 @@
-import 'package:book_library/domain/entites/book.dart';
+import 'package:book_library/domain/entities/book.dart';
 import 'package:book_library/domain/value_objects/identity.dart';
-import 'package:flutter/material.dart';
 
 import '../domain_exception.dart';
 
 class BookShelf {
   static const maxCapacity = 10;
   Identity id;
-  final List<Book> _books;
+  late List<Book> _books;
   List<Book> get books => _books;
 
-  BookShelf(this._books, {required this.id});
+  BookShelf({
+    required this.id,
+  }) {
+    _books = [];
+  }
 
-  addBook(Book book) {
+  addBook(Book books) {
     if (_books.length == maxCapacity) {
       throw DomainException("BookShelf has reached maximum capacity");
     }
-    book.shelfId = id;
-    _books.add(book);
+    books.shelfId = id;
+    _books.add(books);
   }
 }
