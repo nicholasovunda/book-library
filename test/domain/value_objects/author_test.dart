@@ -9,13 +9,17 @@ void main() {
       var value = Author.create("").fold((err) => err, (pass) => pass);
 
       //assert
-      expect(value, const matcher.TypeMatcher<Failure>());
+      expect(
+        value,
+        const matcher.TypeMatcher<Failure>(),
+      );
     });
 
     test("When value is not null returns the value", () {
       String str = "Not empty";
-      var value =
-          Author.create(str).getOrElse(() => throw UnimplementedError());
+      var value = Author.create(str).getOrElse(
+        () => throw UnimplementedError(),
+      );
 
       //assert
       expect(value.value, str);

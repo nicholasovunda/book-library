@@ -8,5 +8,5 @@ class Identity extends Equatable {
   Identity._internal(this.id);
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [id];
 }
